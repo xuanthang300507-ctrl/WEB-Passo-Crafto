@@ -1,0 +1,170 @@
+═══════════════════════════════════════════════════════════════════════════
+                    QUICK START - BẮT ĐẦU NHANH
+═══════════════════════════════════════════════════════════════════════════
+
+🚀 CHỈ CẦN 5 BƯỚC ĐỂ KHỞI CHẠY:
+
+BƯỚC 1: Đảm bảo MongoDB đang chạy
+   ➜ Mở PowerShell mới
+   ➜ Chạy: mongod
+   ➜ Bạn sẽ thấy: "waiting for connections on port 27017"
+
+BƯỚC 2: Cài đặt dependencies
+   ➜ Mở PowerShell trong thư mục C:\PassoCrafto
+   ➜ Chạy: npm install
+   ➜ Chờ cho đến khi xong (2-3 phút)
+
+BƯỚC 3: Kiểm tra file .env
+   ➜ Mở file .env
+   ➜ Đảm bảo: MONGODB_URI=mongodb://localhost:27017/passo-crafto
+   ➜ Đảm bảo: PORT=5000
+
+BƯỚC 4: Khởi chạy server
+   ➜ Chạy: npm start
+   ➜ Nếu muốn auto-reload: npm run dev
+   ➜ Bạn sẽ thấy:
+      ✓ MongoDB Connected
+      🚀 Server running on http://localhost:5000
+
+BƯỚC 5: Kiểm tra API
+   ➜ Mở browser, truy cập: http://localhost:5000/api/health
+   ➜ Bạn sẽ thấy: { "status": "API is running", "timestamp": "..." }
+
+
+═══════════════════════════════════════════════════════════════════════════
+                    TEST API NHANH BẰNG CURL
+═══════════════════════════════════════════════════════════════════════════
+
+📌 Tạo người dùng mới:
+PowerShell:
+curl.exe -X POST http://localhost:5000/api/users `
+  -Headers @{'Content-Type'='application/json'} `
+  -Body '{
+    "firstName": "Test",
+    "lastName": "User",
+    "email": "test@example.com",
+    "specialization": "Software Engineering"
+  }'
+
+📌 Lấy tất cả users:
+curl.exe http://localhost:5000/api/users
+
+📌 Tạo team:
+curl.exe -X POST http://localhost:5000/api/teams `
+  -Headers @{'Content-Type'='application/json'} `
+  -Body '{
+    "name": "Test Team",
+    "description": "Team test",
+    "specialization": "AI"
+  }'
+
+📌 Lấy tất cả teams:
+curl.exe http://localhost:5000/api/teams
+
+
+═══════════════════════════════════════════════════════════════════════════
+                    KIỂM TRA DỮ LIỆU VỚI MONGO SHELL
+═══════════════════════════════════════════════════════════════════════════
+
+1. Mở PowerShell mới
+2. Chạy: mongo
+3. Bạn sẽ vào MongoDB shell
+
+Xem dữ liệu:
+> use passo-crafto              # Chuyển sang database
+> show collections              # Danh sách collections
+> db.users.find()               # Xem tất cả users
+> db.teams.find()               # Xem tất cả teams
+> db.achievements.find()        # Xem tất cả achievements
+> db.users.find().pretty()      # Xem user định dạng đẹp
+
+Xóa dữ liệu (reset):
+> db.users.deleteMany({})       # Xóa tất cả users
+> db.teams.deleteMany({})       # Xóa tất cả teams
+> db.achievements.deleteMany({})# Xóa tất cả achievements
+
+
+═══════════════════════════════════════════════════════════════════════════
+                    SỬ DỤNG MONGODB COMPASS (GUI)
+═══════════════════════════════════════════════════════════════════════════
+
+1. Tải MongoDB Compass: https://www.mongodb.com/products/compass
+2. Mở ứng dụng
+3. Kết nối tới: mongodb://localhost:27017
+4. Vào database: passo-crafto
+5. Xem/quản lý dữ liệu trực quan
+
+✓ Dễ dàng xem, thêm, sửa, xóa documents
+✓ Kiểm tra schema structure
+✓ Export/import dữ liệu
+
+
+═══════════════════════════════════════════════════════════════════════════
+                    CẤU TRÚC THƯ MỤC PROJECT
+═══════════════════════════════════════════════════════════════════════════
+
+PassoCrafto/
+├── server.js                    ← File chính (chạy npm start)
+├── package.json                 ← Dependencies
+├── .env                         ← Cấu hình MongoDB
+├── HƯỚNG_DẪN_MONGODB.txt        ← Tài liệu chi tiết
+├── QUICK_START.txt              ← File này
+├── models/                      ← Định nghĩa Database schemas
+│   ├── User.js                  ← Schema người dùng
+│   ├── Team.js                  ← Schema team
+│   └── Achievement.js           ← Schema thành tích
+├── routes/                      ← API endpoints
+│   ├── userRoutes.js            ← API user
+│   ├── teamRoutes.js            ← API team
+│   └── achievementRoutes.js     ← API achievement
+├── (Frontend files)             ← index.html, style.css, main.js
+└── .git/                        ← Git repository
+
+
+═══════════════════════════════════════════════════════════════════════════
+                    DỪNG SERVER
+═══════════════════════════════════════════════════════════════════════════
+
+Khi chạy npm start hoặc npm run dev:
+✓ Nhấn Ctrl + C trong PowerShell để dừng
+✓ Server sẽ tắt ngay lập tức
+✓ MongoDB vẫn chạy (nếu cần, nhấn Ctrl+C ở cửa sổ mongod)
+
+
+═══════════════════════════════════════════════════════════════════════════
+                    CÁC LỖI THƯỜNG GẶP & GIẢI PHÁP
+═══════════════════════════════════════════════════════════════════════════
+
+❌ "MongoDB connection failed"
+   ✓ Kiểm tra mongod có chạy không
+   ✓ Chạy "mongod" trong PowerShell
+   ✓ Chờ cho đến khi "waiting for connections"
+
+❌ "Cannot find module 'express'"
+   ✓ Chạy: npm install
+   ✓ Chờ cho đến khi xong
+
+❌ "Port 5000 already in use"
+   ✓ Thay đổi PORT trong .env (ví dụ: 5001)
+   ✓ Hoặc dừng process khác dùng port 5000
+
+❌ "Email already exists"
+   ✓ Dùng email khác
+   ✓ Hoặc xóa dữ liệu cũ: db.users.deleteMany({})
+
+❌ "Cannot POST /api/users"
+   ✓ Chắc chắn Header: Content-Type: application/json
+   ✓ Chắc chắn Body có firstName, lastName, email
+   ✓ Chắc chắn specialization là một trong các giá trị cho phép
+
+
+═══════════════════════════════════════════════════════════════════════════
+                    TIẾP THEO?
+═══════════════════════════════════════════════════════════════════════════
+
+✓ Đọc HƯỚNG_DẪN_MONGODB.txt để biết chi tiết về tất cả endpoints
+✓ Sử dụng Postman, REST Client, hoặc curl để test API
+✓ Kết nối Frontend (index.html) với API này
+✓ Triển khai lên Heroku hoặc Platform khác
+
+═══════════════════════════════════════════════════════════════════════════
